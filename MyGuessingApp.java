@@ -3,6 +3,11 @@ import java.util.*;
 public class MyGuessingApp{
 	
 	public static void main(String[] args) {
+		
+		boolean restart=false;
+		
+
+		do{
 		System.out.println();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("WELCOME TO THE GUESSING GAME !!\n");
@@ -11,16 +16,13 @@ public class MyGuessingApp{
 		System.out.println("");
 		GameConfig game = new GameConfig();
 		game.showRules();
-
 		int hintCount = game.getMaxHints();
 		
-
         int currentAttempt = 0;
         boolean guessed = false;
 		boolean win = false;
+
 		
-
-
         while (currentAttempt < game.getMaxAttempts()) {
             System.out.print("Enter your guess : ");
             String val = sc.nextLine(); // read full line
@@ -36,6 +38,7 @@ public class MyGuessingApp{
             String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
             currentAttempt++;
             System.out.println(outcome);
+			System.out.println(game.getTargetValue());
 
             if (outcome.equals("CORRECT !!")) {
                 guessed = true;
@@ -44,7 +47,7 @@ public class MyGuessingApp{
             }
 
             if (hintCount > 0) {
-                System.out.println(HintService.getHints(hintCount, guess));
+                System.out.println(HintService.getHints(hintCount, game.getTargetValue()));
                 hintCount--;
             } else {
                 System.out.println("You are not eligible for any more Hints !");
@@ -57,9 +60,9 @@ public class MyGuessingApp{
 			
         }
 		StorageService.storeResult(player, currentAttempt, win);
-}
-
-	
+		restart = GameController.restartGame(sc);
+	}while(restart);
+	}
 }
 
 class GameConfig{

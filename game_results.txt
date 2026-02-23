@@ -1,1 +1,5 @@
 Player: Vivek, Attempts: 10, Result: LOSE
+Player: Vivek, Attempts: 5, Result: WIN
+Player: Shreyas, Attempts: 10, Result: LOSE
+Player: Vivek, Attempts: 2, Result: WIN
+Player: Shreyas, Attempts: 3, Result: WIN

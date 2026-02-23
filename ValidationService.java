@@ -4,7 +4,7 @@ public class ValidationService{
 		
 		try{
 			int num = Integer.parseInt(input);
-			if(num<1 || num>100){
+			if(num<0 || num>100){
 				throw new InvalidInputException("Enter numbers between 1 and 100 only");
 			}
 			return num;

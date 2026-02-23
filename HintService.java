@@ -1,7 +1,7 @@
 public class HintService{
 	public static String getHints(int hintCount, int value){
 		if(hintCount==1){
-			if(value%2==0) return "Hint 2 : The Value is Even";
+			if(value%2 == 0) return "Hint 2 : The Value is Even";
 			else return "Hint 2 : The Value is Odd";
 		}
 		else if(hintCount==2){
