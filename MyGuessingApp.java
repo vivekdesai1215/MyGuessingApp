@@ -1,18 +1,25 @@
 import java.util.*;
 
-public class GuessingApp{
+public class MyGuessingApp{
 	
 	public static void main(String[] args) {
-    System.out.println();
-    System.out.println("WELCOME TO THE GUESSING GAME !!\n");
-    GameConfig game = new GameConfig();
-    game.showRules();
+		System.out.println();
+		Scanner sc = new Scanner(System.in);
+		System.out.println("WELCOME TO THE GUESSING GAME !!\n");
+		System.out.print("Enter Player Name : ");
+		String player = sc.nextLine();
+		System.out.println("");
+		GameConfig game = new GameConfig();
+		game.showRules();
 
-    int hintCount = game.getMaxHints();
+		int hintCount = game.getMaxHints();
+		
 
-	Scanner sc = new Scanner(System.in);
         int currentAttempt = 0;
         boolean guessed = false;
+		boolean win = false;
+		
+
 
         while (currentAttempt < game.getMaxAttempts()) {
             System.out.print("Enter your guess : ");
@@ -32,6 +39,7 @@ public class GuessingApp{
 
             if (outcome.equals("CORRECT !!")) {
                 guessed = true;
+				win=true;
                 break;
             }
 
@@ -46,8 +54,9 @@ public class GuessingApp{
 
         if (!guessed) {
             System.out.println("You have reached your max chances");
+			
         }
-    
+		StorageService.storeResult(player, currentAttempt, win);
 }
 
 	
@@ -57,7 +66,7 @@ class GameConfig{
 	private final int MIN = 0;
 	private final int MAX = 100;
 	private final int MAX_HINTS = 2;
-	private final int MAX_CHANCES = 5;
+	private final int MAX_CHANCES = 10;
 	
 	private final int target;
 	
