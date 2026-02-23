@@ -38,7 +38,6 @@ public class MyGuessingApp{
             String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
             currentAttempt++;
             System.out.println(outcome);
-			System.out.println(game.getTargetValue());
 
             if (outcome.equals("CORRECT !!")) {
                 guessed = true;
