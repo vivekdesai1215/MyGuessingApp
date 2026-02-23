@@ -1,36 +1,56 @@
 import java.util.*;
 
 public class GuessingApp{
-	public static void main(String[] args){
-		System.out.println("");
-		System.out.println("WELCOME TO THE GUESSING GAME !!\n");
-		GameConfig game = new GameConfig();
-		game.showRules();
-		int hintCount = game.getMaxHints();
-		
-		Scanner sc = new Scanner(System.in);
-		
-		int currentAttempt = 0;
-		boolean check=false;
-		
-		while(currentAttempt <= game.getMaxAttempts()){
-			System.out.print("Enter your guess : ");
-			int guess = sc.nextInt();
-			String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
-			
-			currentAttempt++;
-			System.out.println(outcome);
-			System.out.println(HintService.getHints(hintCount--,guess));
-			System.out.println("\n");
-			
-			if(outcome.equals("CORRECT !!")){
-				check = true;
-				return;
-			}
-		}
-		if(check==false)System.out.println("You have reached your max chances");
 	
-	}
+	public static void main(String[] args) {
+    System.out.println();
+    System.out.println("WELCOME TO THE GUESSING GAME !!\n");
+    GameConfig game = new GameConfig();
+    game.showRules();
+
+    int hintCount = game.getMaxHints();
+
+	Scanner sc = new Scanner(System.in);
+        int currentAttempt = 0;
+        boolean guessed = false;
+
+        while (currentAttempt < game.getMaxAttempts()) {
+            System.out.print("Enter your guess : ");
+            String val = sc.nextLine(); // read full line
+
+            int guess;
+            try {
+                guess = ValidationService.validateValue(val);
+            } catch (InvalidInputException ex) {
+                System.out.println(ex.getMessage());
+                continue;
+            }
+
+            String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
+            currentAttempt++;
+            System.out.println(outcome);
+
+            if (outcome.equals("CORRECT !!")) {
+                guessed = true;
+                break;
+            }
+
+            if (hintCount > 0) {
+                System.out.println(HintService.getHints(hintCount, guess));
+                hintCount--;
+            } else {
+                System.out.println("You are not eligible for any more Hints !");
+            }
+            System.out.println();
+        }
+
+        if (!guessed) {
+            System.out.println("You have reached your max chances");
+        }
+    
+}
+
+	
 }
 
 class GameConfig{
