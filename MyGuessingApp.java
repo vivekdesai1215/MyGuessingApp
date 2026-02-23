@@ -6,6 +6,7 @@ public class GuessingApp{
 		System.out.println("WELCOME TO THE GUESSING GAME !!\n");
 		GameConfig game = new GameConfig();
 		game.showRules();
+		int hintCount = game.getMaxHints();
 		
 		Scanner sc = new Scanner(System.in);
 		
@@ -13,13 +14,14 @@ public class GuessingApp{
 		boolean check=false;
 		
 		while(currentAttempt <= game.getMaxAttempts()){
-			System.out.println("Enter your guess : ");
+			System.out.print("Enter your guess : ");
 			int guess = sc.nextInt();
 			String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
 			
 			currentAttempt++;
 			System.out.println(outcome);
-			
+			System.out.println(HintService.getHints(hintCount--,guess));
+			System.out.println("\n");
 			
 			if(outcome.equals("CORRECT !!")){
 				check = true;
@@ -34,7 +36,7 @@ public class GuessingApp{
 class GameConfig{
 	private final int MIN = 0;
 	private final int MAX = 100;
-	private final int MAX_HINTS = 3;
+	private final int MAX_HINTS = 2;
 	private final int MAX_CHANCES = 5;
 	
 	private final int target;
