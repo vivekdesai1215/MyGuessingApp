@@ -1,12 +1,33 @@
 import java.util.*;
 
-public class MyGuessingApp{
+public class GuessingApp{
 	public static void main(String[] args){
 		System.out.println("");
-		System.out.println("WELCOME TO THE GUESSING GAME !!");
+		System.out.println("WELCOME TO THE GUESSING GAME !!\n");
 		GameConfig game = new GameConfig();
 		game.showRules();
 		
+		Scanner sc = new Scanner(System.in);
+		
+		int currentAttempt = 0;
+		boolean check=false;
+		
+		while(currentAttempt <= game.getMaxAttempts()){
+			System.out.println("Enter your guess : ");
+			int guess = sc.nextInt();
+			String outcome = GuessValidator.validateGuess(guess, game.getTargetValue());
+			
+			currentAttempt++;
+			System.out.println(outcome);
+			
+			
+			if(outcome.equals("CORRECT !!")){
+				check = true;
+				return;
+			}
+		}
+		if(check==false)System.out.println("You have reached your max chances");
+	
 	}
 }
 
@@ -40,4 +61,5 @@ class GameConfig{
 		System.out.println("Hints will be provided after wrong guesses");
 		System.out.println("");
 	}
+	
 }
